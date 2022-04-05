@@ -1,0 +1,20 @@
+notification-service:
+  transport:
+    topics:
+      notification:
+        notify: ${NOTIFICATION_TOPIC:notify}
+
+spring:
+  kafka:
+    consumer:
+      client-id: ${KAFKA_CLIENT_ID:notification-service}
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+      group-id: notification-service-group
+      auto-offset-reset: earliest
+      security.protocol: ${KAFKA_PROTOCOL:PLAINTEXT}
+logging:
+  level:
+    org.apache.kafka.*: WARN
+
+server:
+  port: ${SERVER_PORT:8080}
