@@ -7,7 +7,7 @@ notification-service:
 spring:
   kafka:
     consumer:
-      client-id:notification-service
+      client-id: notification-service
       bootstrap-servers: localhost:9092
       group-id: notification-service-group
       auto-offset-reset: earliest

@@ -1,13 +1,14 @@
 package ru.achernyavskiy0n.notificationservice.kafka;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
@@ -19,28 +20,28 @@ import java.util.Map;
 
 /**
  */
+@EnableKafka
 @Configuration
+@RequiredArgsConstructor
 public class KafkaConsumerConfig {
 
-    @Autowired
-    private KafkaProperties kafkaProperties;
+    private final KafkaProperties kafkaProperties;
 
     @Value("${notification-service.transport.topics.notification.notify}")
-    private String newsTopic;
+    private String topic;
 
-    @Bean("newsConsumerFactory")
+    @Bean("notificationConsumerFactory")
     public ConcurrentKafkaListenerContainerFactory<String, NotificationMessage>
     newsKafkaListenerContainerFactory() {
-
         ConcurrentKafkaListenerContainerFactory<String, NotificationMessage> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(clientIdReceiver());
+        factory.setConsumerFactory(notificationReceiver());
         return factory;
     }
 
     @Bean
-    public ConsumerFactory<String, NotificationMessage> clientIdReceiver() {
-        return createConsumerFactory(NotificationMessage.class, newsTopic);
+    public ConsumerFactory<String, NotificationMessage> notificationReceiver() {
+        return createConsumerFactory(NotificationMessage.class, topic);
     }
 
     @SneakyThrows

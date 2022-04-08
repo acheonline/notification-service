@@ -22,7 +22,7 @@ public class KafkaTransportConsumer implements TransportConsumer {
 
     @KafkaListener(
             topics = {"${notification-service.transport.topics.notification.notify}"},
-            containerFactory = "newsConsumerFactory")
+            containerFactory = "notificationConsumerFactory")
     public void createAccount(@NonNull NotificationMessage message) {
         repository.saveNotification(message);
     }
