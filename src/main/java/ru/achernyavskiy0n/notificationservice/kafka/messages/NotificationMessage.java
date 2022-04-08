@@ -9,6 +9,8 @@ import lombok.*;
 @Getter
 @ToString
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NotificationMessage {
     private String username;
     private String payload;
