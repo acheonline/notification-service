@@ -26,4 +26,11 @@ public class InMemoryNotificationRepository implements NotificationRepository {
     public int count() {
         return notificationMessages.size();
     }
+
+    @Override
+    public List<NotificationMessage> getAllNotification() {
+        return notificationMessages;
+    }
+
+
 }
